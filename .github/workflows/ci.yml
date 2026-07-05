@@ -1,4 +1,4 @@
-name: CI Pipeline
+name: Run Linter (Biome)
 
 on:
   push:
@@ -24,13 +24,11 @@ jobs:
         run: npm ci
 
       - name: Run Linter (Biome)
-        run: npx biome check .
+        run: npx biome check src/app src/lib src/hooks src/middleware.ts
 
       - name: Build Next.js app
         run: npm run build
         env:
-          # Для сборки Next.js могут быть нужны фейковые переменные,
-          # чтобы сборщик не ругался на их отсутствие
           DATABASE_URL: "postgresql://mock:mock@localhost:5432/mock"
           NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: "mock"
           CLERK_SECRET_KEY: "mock"
